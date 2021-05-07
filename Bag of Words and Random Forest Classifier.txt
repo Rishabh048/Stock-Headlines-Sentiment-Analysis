@@ -1,0 +1,19 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.ensemble import RandomForestClassifier
+
+#Implementation of Bag of Words
+cv = CountVectorizer(ngram_range=(2,2))
+traindata_x= cv.fit_transform(headlines)
+
+#Random Forest Classifier
+randomclassifier = RandomForestClassifier(n_estimators = 200, criterion = 'entropy',bootstrap=True)
+randomclassifier.fit(traindata_x, train['Label'])
+
+#transforming test data
+test_transform=[]
+for row in range(0,len(test)):
+    test_transform.append(' '.join([str(x) for x in test.iloc[row,2:27]]))
+
+test_data = cv.transform(test_transform)
+predictions = randomforestclassifier.predict(test_data)
+predictions

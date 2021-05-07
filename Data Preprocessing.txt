@@ -1,0 +1,37 @@
+import pandas as pd
+
+df= pd.read_csv(r'C:\Users\Rishabh Goel\Desktop\Data\DataStock.csv', encoding = "ISO-8859-1")
+df.head()
+
+train = df[df['Date'] < '20150101']
+test = df[df['Date'] > '20141231']
+
+data = train.iloc[:,2:27]
+data.columns
+
+#Removing Punctuations and converting it all to lower case
+data.replace("[^a-zA-Z]"," ", inplace=True)
+data.head()
+
+#Renaming columns names for ease of access
+list1 = [ i for i in range(25)]
+new_index = [str(i) for i in list1]
+new_index
+
+data.columns = new_index
+data.columns
+
+#converting all headlines to lower case
+for index in new_index:
+    data[index] = data[index].str.lower()
+data.head(2)
+
+#join is used to convert it into string format
+' '.join([str(x) for x in data.iloc[1, 0:25]])
+
+#do this for all rows and store it in a list
+headlines=[]
+for row in range(0,len(data)):
+    headlines.append(' '.join([str(i) for i in data.iloc[row,0:25]]))
+    
+headlines[0:3]
